@@ -1,0 +1,81 @@
+body{
+    font-family: 'Roboto', sans-serif;
+}
+h1,h2,h3,h4,h5,h6{
+    font-weight: bold;
+}
+.altura-arriba-abajo{
+    padding: 100px 0;
+}
+.logotipo{
+    width: 150px;
+    padding: 10px 0;
+}
+.iconos-redes-header{
+    width: 20px;
+    margin: 10px 5px;
+}
+.banner-video{
+    background-image: url("/img/home/video-bg.jpg");
+    padding: 250px 0;
+    position: relative;
+    text-align: center;
+}
+.banner-video img{
+    width: 80px;
+    height: 80px;
+    position: relative;
+}
+footer{
+    background-color:#000000;
+    padding: 100px 0;
+    text-align: center;
+}
+footer .logotipo-footer{
+width: 200px;
+margin-bottom: 20px;
+}
+footer p{
+    color: #fff;
+    font-size: 12px;
+}
+
+/*Estilos a bootrasp*/
+.carousel-caption{
+    position: absolute;
+    top: 40%;
+    bottom: 20px;
+    left: 15%;
+    z-index: 10;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    color: #fff;
+    text-align:left;
+}
+.btn-light {
+    color: #ffffff;
+    background-color: transparent;
+    border-color: #f8f9fa;
+    border: 2px solid #fff;
+    border-radius: 20px;
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+/*Somos*/
+.Cabecera-Somos{
+    padding: 150px 0 100px 0;
+    background-image: url("/img/somos/slider-interior.jpg");
+    background-position: center center;
+    background-size: cover;
+}
+.texto-blanco{
+    color: #fff;
+}
+.banner-somos{
+    background-image: url(/img/somos/somos-equipo.jpg);
+    background-position: center;
+    background-size: cover;
+    padding: 200px 0;
+    text-align: center;
+}
