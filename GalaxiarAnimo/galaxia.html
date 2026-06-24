@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Eres Imparable</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+html, body {
+  overflow: hidden;
+  background: #0a0015;
+  color: white;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  touch-action: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* ---- Layers ---- */
+#layer-nebula, #layer-stars, #layer-shooting, #layer-system, #layer-messages, #layer-text {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+#layer-nebula { z-index: 0; }
+#layer-stars  { z-index: 1; }
+#layer-shooting { z-index: 2; overflow: hidden; }
+#layer-system { z-index: 3; display: flex; align-items: center; justify-content: center; }
+#layer-messages { z-index: 4; overflow: hidden; }
+#layer-text  { z-index: 5; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+#layer-text > * { pointer-events: auto; }
+
+/* Nebula */
+#nebula {
+  width: 100%; height: 100%;
+  background:
+    radial-gradient(ellipse at 20% 30%, rgba(0,150,255,0.12), transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(255,200,0,0.1), transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(0,255,150,0.08), transparent 50%);
+}
+
+/* Stars canvas */
+#stars-canvas { width: 100%; height: 100%; display: block; }
+
+/* Shooting star */
+.shooting-star {
+  position: absolute;
+  width: 2px; height: 2px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 0 4px 1px rgba(255,255,255,0.5);
+  animation: shoot linear infinite;
+}
+@keyframes shoot {
+  0%   { transform: translate(0,0); opacity: 1; }
+  70%  { opacity: 1; }
+  100% { transform: translate(-80vw, 80vh); opacity: 0; }
+}
+
+/* Solar system */
+#solarSystem {
+  position: relative;
+  width: min(85vmin, 600px);
+  height: min(85vmin, 600px);
+  border-radius: 50%;
+}
+.sun {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  width: 6%; aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff7a0, #ffaa00);
+  box-shadow: 0 0 min(6vw,60px) min(2vw,20px) rgba(255,200,50,0.3);
+}
+.orbit {
+  position: absolute;
+  top: 50%; left: 50%;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 50%;
+  transform: translate(-50%,-50%);
+  animation: spin linear infinite;
+}
+.orbit .planet {
+  position: absolute;
+  top: 50%; left: 100%;
+  transform: translate(-50%,-50%);
+  border-radius: 50%;
+}
+@keyframes spin {
+  from { transform: translate(-50%,-50%) rotate(0deg); }
+  to   { transform: translate(-50%,-50%) rotate(360deg); }
+}
+
+/* Gradient text */
+.gradient-text {
+  display: inline-block;
+  font-weight: 800;
+  letter-spacing: 2px;
+  background: linear-gradient(135deg, #f093fb, #f5576c, #4facfe, #00f2fe);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 40px rgba(79,172,254,0.3));
+  animation: pulseGlow 4s ease-in-out infinite;
+  line-height: 1.2;
+}
+.gradient-text small {
+  display: block;
+  font-weight: 300;
+  -webkit-text-fill-color: rgba(255,255,255,0.6);
+  background: none;
+  filter: none;
+  letter-spacing: 3px;
+  margin-top: 0.25em;
+}
+@keyframes pulseGlow {
+  0%,100% { filter: drop-shadow(0 0 20px rgba(79,172,254,0.3)); transform: scale(1); }
+  50%     { filter: drop-shadow(0 0 50px rgba(79,172,254,0.6)); transform: scale(1.03); }
+}
+
+/* Floating messages */
+.float-msg {
+  position: absolute;
+  color: rgba(150,220,255,0.7);
+  text-shadow: 0 0 20px rgba(79,172,254,0.5), 0 0 40px rgba(0,150,255,0.3);
+  opacity: 0;
+  animation: rise linear infinite;
+  white-space: nowrap;
+  font-size: clamp(0.85rem, 3.5vw, 1.3rem);
+}
+@keyframes rise {
+  0%   { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+  10%  { opacity: 0.9; }
+  85%  { opacity: 0.9; }
+  100% { transform: translateY(-10vh) rotate(10deg); opacity: 0; }
+}
+
+/* Sparkle click effect */
+.sparkle {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  animation: sparkleFloat 3s ease-out forwards;
+  opacity: 0;
+  font-size: clamp(16px, 5vw, 28px);
+}
+@keyframes sparkleFloat {
+  0%   { transform: translateY(0) scale(0.3) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(-120px) scale(1.5) rotate(180deg); opacity: 0; }
+}
+
+/* Landscape on small height */
+@media (max-height: 500px) {
+  #solarSystem { width: 50vmin; height: 50vmin; }
+  .gradient-text { font-size: clamp(1.2rem, 4vw, 2rem) !important; }
+  .gradient-text small { font-size: 0.3em !important; }
+  @keyframes pulseGlow {
+    0%,100% { filter: drop-shadow(0 0 15px rgba(79,172,254,0.3)); transform: scale(1); }
+    50%     { filter: drop-shadow(0 0 30px rgba(79,172,254,0.5)); transform: scale(1.02); }
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- Layer 0: Nebula -->
+<div id="layer-nebula"><div id="nebula"></div></div>
+
+<!-- Layer 1: Stars -->
+<div id="layer-stars"><canvas id="stars-canvas"></canvas></div>
+
+<!-- Layer 2: Shooting stars -->
+<div id="layer-shooting"></div>
+
+<!-- Layer 3: Solar system -->
+<div id="layer-system">
+  <div id="solarSystem">
+    <div class="sun"></div>
+    <div class="orbit" style="width:20%;height:20%;animation-duration:8s;">
+      <div class="planet" style="width:10px;height:10px;background:#ff6b6b;box-shadow:0 0 10px #ff6b6b;"></div>
+    </div>
+    <div class="orbit" style="width:33%;height:33%;animation-duration:12s;">
+      <div class="planet" style="width:12px;height:12px;background:#ffd93d;box-shadow:0 0 12px #ffd93d;"></div>
+    </div>
+    <div class="orbit" style="width:48%;height:48%;animation-duration:18s;">
+      <div class="planet" style="width:10px;height:10px;background:#4facfe;box-shadow:0 0 10px #4facfe;"></div>
+    </div>
+    <div class="orbit" style="width:65%;height:65%;animation-duration:25s;">
+      <div class="planet" style="width:14px;height:14px;background:#a78bfa;box-shadow:0 0 14px #a78bfa;"></div>
+    </div>
+    <div class="orbit" style="width:83%;height:83%;animation-duration:35s;">
+      <div class="planet" style="width:12px;height:12px;background:#34d399;box-shadow:0 0 12px #34d399;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Layer 4: Floating messages -->
+<div id="layer-messages"></div>
+
+<!-- Layer 5: Center text -->
+<div id="layer-text">
+  <div class="text-center px-3 gradient-text" style="font-size:clamp(1.8rem,7vw,4rem)">
+    Eres Imparable
+    <small class="text-white-50 fw-lighter" style="font-size:clamp(0.7rem,2.5vw,1.2rem);letter-spacing:3px">Tu amiga cree en ti</small>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+const messages = [
+  "T\u00fa puedes con todo",
+  "Eres m\u00e1s fuerte de lo que crees",
+  "No te rindas, brilla",
+  "Cada d\u00eda es una nueva oportunidad",
+  "Conf\u00eda en ti, eres incre\u00edble",
+  "Tu sonrisa ilumina el mundo",
+  "Eres capaz de lograr lo que sue\u00f1es",
+  "Nunca dejes de creer en ti",
+  "Eres \u00fanica y especial",
+  "Lo mejor est\u00e1 por venir",
+  "Tienes un coraz\u00f3n enorme",
+  "El mundo necesita tu luz",
+  "Eres valiosa, no lo olvides",
+  "Sigue adelante, lo est\u00e1s haciendo genial",
+  "Tu esfuerzo vale la pena"
+];
+const sparks = ["\u2b50","\u2728","\U0001f31f","\U0001f4ab","\u2600\ufe0f","\U0001f308","\U0001f98b"];
+
+// Stars
+(function initStars() {
+  const c = document.getElementById('stars-canvas');
+  const ctx = c.getContext('2d');
+  let w, h, stars = [];
+  const count = Math.min(400, Math.floor((window.innerWidth * window.innerHeight) / 2000));
+  function resize() { w = c.width = window.innerWidth; h = c.height = window.innerHeight; }
+  resize();
+  window.addEventListener('resize', resize);
+  for (let i = 0; i < count; i++) stars.push({ x: Math.random() * w, y: Math.random() * h, r: Math.random() * 2 + 0.5, a: Math.random(), s: 0.005 + Math.random() * 0.02, d: Math.random() > 0.5 ? 1 : -1 });
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+    for (const s of stars) { s.a += s.s * s.d; if (s.a > 1 || s.a < 0.1) s.d *= -1; ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2); ctx.fillStyle = `rgba(255,255,255,${s.a})`; ctx.fill(); }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// Shooting stars
+(function() {
+  const container = document.getElementById('layer-shooting');
+  setInterval(() => {
+    const el = document.createElement('div');
+    el.className = 'shooting-star';
+    el.style.left = Math.random() * 100 + '%';
+    el.style.top = Math.random() * 40 + '%';
+    el.style.animationDuration = (1 + Math.random()) + 's';
+    container.appendChild(el);
+    setTimeout(() => el.remove(), 3000);
+  }, 3000 + Math.random() * 4000);
+})();
+
+// Floating messages
+(function() {
+  const container = document.getElementById('layer-messages');
+  function create() {
+    const el = document.createElement('div');
+    el.className = 'float-msg';
+    el.textContent = messages[Math.floor(Math.random() * messages.length)];
+    el.style.left = (Math.random() * 80 + 10) + '%';
+    el.style.animationDuration = (12 + Math.random() * 8) + 's';
+    container.appendChild(el);
+    setTimeout(() => el.remove(), 22000);
+  }
+  for (let i = 0; i < 3; i++) setTimeout(create, i * 3000);
+  setInterval(create, 2500);
+})();
+
+// Sparkles on click/touch
+function spawn(x, y) {
+  for (let i = 0; i < 4; i++) {
+    const el = document.createElement('div');
+    el.className = 'sparkle';
+    el.textContent = sparks[Math.floor(Math.random() * sparks.length)];
+    el.style.left = (x + (Math.random() - 0.5) * 50) + 'px';
+    el.style.top = y + 'px';
+    el.style.animationDuration = (2 + Math.random() * 2) + 's';
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 4000);
+  }
+}
+document.addEventListener('click', e => spawn(e.clientX, e.clientY));
+document.addEventListener('touchstart', e => { const t = e.touches[0]; spawn(t.clientX, t.clientY); }, { passive: true });
+</script>
+</body>
+</html>
