@@ -1,0 +1,139 @@
+/* ============================================
+   ÁLBUM DE FOTOS VIRTUAL — Estilos propios
+   HTML5 + CSS3 (complementa a Bootstrap 5)
+   ============================================ */
+
+:root {
+  --radio-tarjeta: 14px;
+  --sombra-suave: 0 4px 14px rgba(0, 0, 0, .12);
+}
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+/* ---------- Navbar ---------- */
+.filtro-categoria {
+  max-width: 210px;
+}
+
+/* ---------- Leyenda de categorías ---------- */
+.leyenda-item {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  padding: .3rem .8rem;
+  border-radius: 50rem;
+  background: #fff;
+  border: 2px solid var(--color-cat, #6c757d);
+  color: var(--color-cat, #6c757d);
+  font-size: .85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.leyenda-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--sombra-suave);
+}
+
+.leyenda-item .punto {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--color-cat, #6c757d);
+}
+
+.leyenda-item.activa {
+  background: var(--color-cat, #6c757d);
+  color: #fff;
+}
+
+.leyenda-item.activa .punto {
+  background: #fff;
+}
+
+/* ---------- Tarjetas de la galería ---------- */
+.tarjeta-foto {
+  border-radius: var(--radio-tarjeta);
+  overflow: hidden;
+  background: #fff;
+  border-top: 6px solid var(--color-cat, #6c757d); /* color de la categoría */
+  box-shadow: var(--sombra-suave);
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+
+.tarjeta-foto:hover {
+  transform: translateY(-5px) scale(1.015);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, .20);
+}
+
+.tarjeta-foto img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;      /* recorta la imagen sin deformarla */
+  display: block;
+  cursor: pointer;
+}
+
+.tarjeta-foto .pie {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem;
+  padding: .65rem .8rem;
+}
+
+.tarjeta-foto .badge-cat {
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .4px;
+  text-transform: uppercase;
+  color: #fff;
+  background: var(--color-cat, #6c757d);
+  padding: .3em .7em;
+  border-radius: 50rem;
+}
+
+.btn-eliminar {
+  border: none;
+  background: transparent;
+  color: #adb5bd;
+  font-size: 1rem;
+  line-height: 1;
+  padding: .25rem;
+  border-radius: 50%;
+  transition: color .15s ease, background .15s ease;
+}
+
+.btn-eliminar:hover {
+  color: #dc3545;
+  background: rgba(220, 53, 69, .12);
+}
+
+/* ---------- Vista previa del formulario ---------- */
+.preview-img {
+  max-height: 160px;
+  max-width: 240px;
+  object-fit: cover;
+}
+
+/* ---------- Modal ---------- */
+.modal-img {
+  max-height: 80vh;
+}
+
+#modalInfo {
+  font-weight: 600;
+}
+
+/* ---------- Animación de entrada de tarjetas ---------- */
+@keyframes aparecer {
+  from { opacity: 0; transform: scale(.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.tarjeta-foto {
+  animation: aparecer .25s ease-out;
+}
