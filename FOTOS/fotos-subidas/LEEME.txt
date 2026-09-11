@@ -1,0 +1,5 @@
+Esta carpeta es para guardar las fotos que subas desde el álbum.
+
+Al abrir el álbum, pulsa el botón verde "Conectar carpeta"
+y elige ESTA carpeta (o la que prefieras). Ahí se guardarán
+las fotos subidas y un archivo categorias.txt con tus categorías.

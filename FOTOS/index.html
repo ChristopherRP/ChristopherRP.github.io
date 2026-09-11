@@ -30,12 +30,23 @@
 
         <!-- Filtro por categoría -->
         <select id="filtroCategoria" class="form-select form-select-sm filtro-categoria" title="Filtrar por categoría">
-          <option value="">Todas las categorías</option>
+          <option value="todas">Todas las categorías</option>
         </select>
 
+        <!-- Botón para conectar una carpeta (guardar fotos en disco) -->
+        <button type="button" id="btnCarpeta" class="btn btn-outline-secondary btn-sm d-none"
+                title="Guardar las fotos subidas en una carpeta de tu PC">
+          <i class="bi bi-folder2-open me-1"></i>Conectar carpeta
+        </button>
+
+        <!-- Botón para gestionar categorías -->
+        <button type="button" id="btnGestionar" class="btn btn-outline-light btn-sm" title="Crear o editar categorías">
+          <i class="bi bi-tags me-1"></i> Categorías
+        </button>
+
         <!-- Botón para cargar fotos -->
-        <button type="button" id="btnCargar" class="btn btn-primary btn-sm fw-semibold">
-          <i class="bi bi-cloud-arrow-up me-1"></i> Cargar foto
+        <button type="button" id="btnCargar" class="btn btn-primary btn-sm fw-semibold" title="Subir una o varias fotos">
+          <i class="bi bi-cloud-arrow-up me-1"></i> Subir fotos
         </button>
       </div>
     </div>
@@ -51,8 +62,8 @@
 
         <form id="formFoto" class="row g-3">
           <div class="col-md-6">
-            <label for="inputFoto" class="form-label">Selecciona una imagen</label>
-            <input type="file" class="form-control" id="inputFoto" accept="image/*">
+            <label for="inputFoto" class="form-label">Selecciona una o varias imágenes</label>
+            <input type="file" class="form-control" id="inputFoto" accept="image/*" multiple>
           </div>
 
           <div class="col-md-4">
@@ -72,13 +83,13 @@
 
         <!-- Vista previa -->
         <div id="vistaPrevia" class="mt-3 d-none">
-          <p class="text-muted small mb-1">Vista previa:</p>
+          <p class="text-muted small mb-1">Vista previa: <span id="txtCantidad"></span></p>
           <img id="imgPreview" src="" alt="Vista previa" class="border rounded preview-img">
         </div>
       </div>
     </div>
 
-    <!-- Leyenda de colores por categoría -->
+    <!-- Leyenda de colores por categoría (filtros) -->
     <section class="mb-4">
       <h6 class="text-uppercase text-secondary fw-bold mb-2">Categorías</h6>
       <div id="leyendaCategorias" class="d-flex flex-wrap gap-2"></div>
@@ -93,7 +104,7 @@
     <!-- Mensaje cuando no hay fotos -->
     <div id="mensajeVacio" class="text-center py-5 text-secondary d-none">
       <i class="bi bi-image display-1 d-block mb-3"></i>
-      <p class="fs-5">Aún no hay fotos en esta categoría.<br>Usa el botón <strong>“Cargar foto”</strong> para comenzar.</p>
+      <p class="fs-5">Aún no hay fotos en esta categoría.<br>Usa el botón <strong>“Subir fotos”</strong> para comenzar.</p>
     </div>
   </main>
 
@@ -104,6 +115,31 @@
         <div class="text-center">
           <img id="modalImg" src="" alt="" class="img-fluid rounded shadow-lg modal-img">
           <p id="modalInfo" class="mt-3 badge fs-6"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal para gestionar categorías (tabla categoria) -->
+  <div class="modal fade" id="modalCategorias" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="bi bi-tags me-2 text-primary"></i>Gestionar categorías</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <p class="text-muted small mb-3">
+            Cada categoría guarda su propio <strong>color</strong>. Cambia el nombre o el color y pulsa
+            <i class="bi bi-check-lg"></i> para guardar en la base de datos.
+          </p>
+          <div id="listaCategorias"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="btnNuevaCategoria" class="btn btn-success">
+            <i class="bi bi-plus-lg me-1"></i> Nueva categoría
+          </button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
         </div>
       </div>
     </div>
