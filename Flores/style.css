@@ -292,7 +292,6 @@ body {
 .flower__line__leaf--2 {
   top: 45%;
   transform: rotate(70deg) rotateY(30deg);
-  left: -10%;
 }
 .flower__line__leaf--3,
 .flower__line__leaf--4,
@@ -867,17 +866,6 @@ body {
 }
 
 /* ---------- Keyframes ---------- */
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateX(-50%) translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-  }
-}
 
 @-webkit-keyframes growing-grass-ans--1 {
   0% {
