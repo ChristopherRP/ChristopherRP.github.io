@@ -8,11 +8,11 @@ const chatMessages = [
 ];
 
 const cardMessage =
-  "Para mi cari\u00f1o:\n\n" +
+  "Para mi cari\u00f1o: Yazz\n\n" +
   "Las flores amarillas son para ti. Así como el sol hace crecer " +
   "los girasoles, tú haces brillar mis días.\n\n" +
   "Este pequeño regalo virtual es un pedacito de mi cariño para ti.\n\n" +
-  "Con todo mi amor.";
+  "Con todo mi amor,\nDe: Chris";
 
 const finalMessage =
   "Flores amarillas para ti, cariño. Te quiero muchísimo.";
